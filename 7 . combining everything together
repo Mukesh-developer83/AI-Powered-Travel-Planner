@@ -1,0 +1,30 @@
+import streamlit as st
+from langchain.chains import LLMChain
+from langchain.llms import OpenAI
+from langchain.prompts import PromptTemplate
+
+# LangChain setup (for now, using OpenAI as a placeholder)
+prompt_template = """You are an AI-powered travel assistant. A user is asking for travel recommendations between a source and destination. Provide the travel options including cab, train, bus, and flight with estimated costs, and travel time.
+
+Source: {source}
+Destination: {destination}
+"""
+
+prompt = PromptTemplate(input_variables=["source", "destination"], template=prompt_template)
+llm = OpenAI(temperature=0.7)  # Use Google GenAI once integrated
+chain = LLMChain(llm=llm, prompt=prompt)
+
+def get_travel_options(source, destination):
+    return chain.run({"source": source, "destination": destination})
+
+# Streamlit interface
+st.title("AI-Powered Travel Planner")
+source = st.text_input("Enter source location:")
+destination = st.text_input("Enter destination location:")
+
+if st.button("Get Travel Options"):
+    if source and destination:
+        travel_options = get_travel_options(source, destination)
+        st.write(travel_options)
+    else:
+        st.error("Please enter both source and destination!")
