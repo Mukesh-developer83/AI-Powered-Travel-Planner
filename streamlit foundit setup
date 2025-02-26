@@ -1,0 +1,17 @@
+import streamlit as st
+
+# Set the title
+st.title("AI-Powered Travel Planner")
+
+# Collect user input
+source = st.text_input("Enter source location:")
+destination = st.text_input("Enter destination location:")
+
+# Button to trigger the travel planning
+if st.button("Get Travel Options"):
+    if source and destination:
+        # Call the function to get travel options (to be implemented later)
+        travel_options = get_travel_options(source, destination)
+        st.write(travel_options)
+    else:
+        st.error("Please enter both source and destination!")
