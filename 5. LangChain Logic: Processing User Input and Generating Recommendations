@@ -1,0 +1,20 @@
+from langchain.chains import LLMChain
+from langchain.llms import OpenAI
+from langchain.prompts import PromptTemplate
+
+# Define a prompt template for LangChain
+prompt_template = """You are an AI-powered travel assistant. A user is asking for travel recommendations between a source and destination. Provide the travel options including cab, train, bus, and flight with estimated costs, and travel time.
+
+Source: {source}
+Destination: {destination}
+"""
+
+prompt = PromptTemplate(input_variables=["source", "destination"], template=prompt_template)
+
+# Initialize LangChain with OpenAI or GenAI
+llm = OpenAI(temperature=0.7)  # Adjust temperature as necessary
+chain = LLMChain(llm=llm, prompt=prompt)
+
+# Function to call the chain
+def get_travel_options(source, destination):
+    return chain.run({"source": source, "destination": destination})
