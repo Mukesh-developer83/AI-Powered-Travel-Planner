@@ -1,0 +1,16 @@
+from google.cloud import genai
+
+# Setup GenAI client
+client = genai.PredictionServiceClient()
+
+def get_travel_options_from_genai(source, destination):
+    request = genai.PredictRequest(
+        model="your-model-id",
+        inputs=[{"source": source, "destination": destination}]
+    )
+
+    # Call the GenAI API
+    response = client.predict(request=request)
+    
+    # Process the response and return travel options
+    return response.predictions[0].choices[0].text  # Modify based on actual API response structure
